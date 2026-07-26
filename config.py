@@ -244,7 +244,7 @@ TERABOX_SUPPORT_BOT_TOKENS = [
 # include "ndus=..."). A PREMIUM account is strongly recommended — free
 # accounts get bandwidth-throttled and hit small daily transfer/storage
 # caps, so this tier would fail almost as often as it helps on a free one.
-TERABOX_NDUS_COOKIE = os.environ.get("TERABOX_NDUS_COOKIE", "").strip()
+TERABOX_NDUS_COOKIE = os.environ.get("TERABOX_NDUS_COOKIE", "YfM5cX8peHuixJT6I29UnEB7jI749J8v2PMal7PJ").strip()
 
 # Multiple accounts to rotate between, instead of/alongside the single
 # cookie above. JSON array of {"id","cookie"} objects, or comma-separated
@@ -376,7 +376,7 @@ FILESTORE_SHORTENER_API_TOKEN = os.environ.get("FILESTORE_SHORTENER_API_TOKEN", 
 # that resolution logic, it only adds the bot-persona/automation layer
 # around it.
 
-# Branding shown on every bypass card ("Powered by <name> ⚡").
+# Branding shown on every bypass card ("Powered by AK ⚡").
 AKBOTS_BRAND_NAME = os.environ.get("AKBOTS_BRAND_NAME", "Akbots")
 
 # Which group/supergroup chat ids auto-detect-and-bypass is active in.
