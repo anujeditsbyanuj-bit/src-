@@ -188,7 +188,7 @@ FORCE_SUB_CHANNEL = os.environ.get("FORCE_SUB_CHANNEL", "")
 # ==============================
 # Get a free API key at https://www.themoviedb.org/settings/api
 # Leave TMDB_API_KEY empty to keep /movieinfo, /poster and autopost disabled.
-TMDB_API_KEY = os.environ.get("TMDB_API_KEY", "")
+TMDB_API_KEY = os.environ.get("TMDB_API_KEY", "61e2290429798c561450eb56b26de19b")
 
 # Channel where the daily autopost job publishes movie release updates.
 # Leave empty to keep autopost disabled even if TMDB_API_KEY is set.
