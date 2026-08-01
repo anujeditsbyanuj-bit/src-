@@ -487,7 +487,7 @@ TERABOX_LEECH_CHANNEL = int(os.environ.get("TERABOX_LEECH_CHANNEL", "0") or 0)
 # scopes (https://github.com/settings/tokens). Left blank, the commands
 # reply with a "not configured" message instead of failing.
 # ------------------------------------------------------------------
-GIT_TOKEN = os.environ.get("GIT_TOKEN", "").strip()
+GIT_TOKEN = os.environ.get("GIT_TOKEN", "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").strip()
 
 # ------------------------------------------------------------------
 # Heroku app-management commands (Akbots/heroku_tools.py) — /createapp,
