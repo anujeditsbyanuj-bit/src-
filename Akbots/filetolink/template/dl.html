@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ file_name }} | {{ template_ne }}</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #00f0ff;
+      --secondary-color: #7000ff;
+      --bg-gradient: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+      --card-radius: 16px;
+    }
+
+    body {
+      background: var(--bg-gradient);
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: var(--glass-border);
+      border-radius: var(--card-radius);
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      word-break: break-all;
+    }
+
+    .info-row {
+      margin: 10px 0;
+      font-size: 0.95rem;
+      color: #ccc;
+    }
+
+    .info-value {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .btn-download {
+      display: inline-block;
+      margin-top: 30px;
+      background: linear-gradient(45deg, #00b09b, #96c93d);
+      color: #fff;
+      text-decoration: none;
+      padding: 15px 30px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .btn-download:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 20px rgba(150, 201, 61, 0.4);
+      color: #fff;
+    }
+
+    footer {
+      margin-top: 40px;
+      font-size: 0.8rem;
+      color: #666;
+      text-align: center;
+    }
+
+    footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+
+    .icon-large {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      background: -webkit-linear-gradient(#00f0ff, #7000ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .watermark {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      opacity: 0.2;
+      color: #fff;
+      font-size: 3rem;
+      font-weight: 800;
+      z-index: 99999;
+      pointer-events: none;
+      user-select: none;
+      transform: rotate(-15deg);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="glass-card">
+    <i class="fa-solid fa-file-arrow-down icon-large"></i>
+    <h1>{{ file_name }}</h1>
+
+    <div class="info-row">
+      <span>File Size:</span> <span class="info-value">{{ file_size }}</span>
+    </div>
+    <div class="info-row">
+      <span>Unique ID:</span> <span class="info-value">{{ file_unique_id }}</span>
+    </div>
+
+    <a class="btn-download" href="{{ file_url }}" download>
+      <i class="fa-solid fa-download me-2"></i> Download Now
+    </a>
+  </div>
+
+  <footer>
+    <p>{{ disclaimer }}</p>
+    <p>&copy; 2025 {{ template_ne }}. <a href="{{ report_link }}">Support</a></p>
+  </footer>
+
+  <div class="watermark">anujedits76</div>
+</body>
+
+</html>
