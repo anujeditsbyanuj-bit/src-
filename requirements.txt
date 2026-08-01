@@ -208,7 +208,12 @@ faster-whisper
 # need PyTorch (there's no good lightweight alternative for real cloning
 # today) — pull it in only if you actually want cloned-voice dubbing;
 # /dub still works with a stock edge-tts voice if this isn't installed.
-TTS
+#
+# DISABLED: Coqui TTS has no PyPI release compatible with Python 3.12
+# (the version Render's Docker image builds with) — pinning it here
+# crashed the entire deploy. Uncomment only if you switch to a Python
+# <=3.11 base image AND actually need voice cloning.
+# TTS
 
 # NOT added, on purpose:
 #   pyrogram==2.0.106   -> conflicts with this project's `kurigram` (a
