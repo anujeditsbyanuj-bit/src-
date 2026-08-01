@@ -505,7 +505,7 @@ HEROKU_API = os.environ.get("HEROKU_API", "").strip()
 # Left blank, the commands reply with a "not configured" message instead
 # of failing.
 # ------------------------------------------------------------------
-GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "").strip()
+GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "AQ.Ab8RN6KLU1fhQc8cfVcxK6MlS8SG2iOpSUOGmxMDLN7S5lrwig").strip()
 
 # Optional: comma-separated extra keys to rotate through when the current
 # one hits Google's free-tier rate limit (e.g. "key2,key3"). Leave blank
@@ -526,7 +526,7 @@ GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash").strip()
 # Get a free key at https://console.groq.com/keys. Left blank, the
 # commands reply with a "not configured" message instead of failing.
 # ------------------------------------------------------------------
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "").strip()
+GROQ_API_KEY = os.environ.get("GROQ_API_KEY", "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").strip()
 
 # Optional: comma-separated extra keys to rotate through when the current
 # one hits a rate limit. Leave blank if you only have one key.
@@ -551,7 +551,7 @@ GROQ_MODEL = os.environ.get("GROQ_MODEL", "openai/gpt-oss-20b").strip()
 # Anthropic billing needed. Get a key (with credits) at
 # https://openrouter.ai/keys.
 # ------------------------------------------------------------------
-OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "").strip()
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "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").strip()
 
 # Shown to OpenRouter for their leaderboards/rate-limit dashboard — not
 # secret, safe to leave as-is or replace with your own bot's name/link.
