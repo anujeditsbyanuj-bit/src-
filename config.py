@@ -391,7 +391,7 @@ STREAM_PORT = int(os.environ.get("STREAM_PORT", "8070"))
 # (fine for local testing, not reachable from outside).
 _stream_domain = os.environ.get(
     "STREAM_FQDN",
-    os.environ.get("REPLIT_DEV_DOMAIN", "file-to-link-bot-jcrf.onrender.com")
+    os.environ.get("REPLIT_DEV_DOMAIN", "src-muu8.onrender.com")
 ).strip()
 STREAM_HAS_SSL = os.environ.get("STREAM_HAS_SSL", "true").lower() == "true"
 if _stream_domain:
