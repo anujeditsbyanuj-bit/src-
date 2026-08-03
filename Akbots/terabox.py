@@ -1,6 +1,3 @@
-#please give credits https://github.com/MN-BOTS
-#  @MrMNTG @MusammilN
-#
 # Ported into Akbots: swapped the MN-BOTS-specific config (CHANNEL/DATABASE
 # classes, a raw pymongo MongoClient that was created — but never actually
 # used — at import time) for Akbots' own config.py / verify_patch.py shim,
