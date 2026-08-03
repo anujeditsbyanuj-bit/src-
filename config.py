@@ -378,7 +378,7 @@ AKBOTS_SHARE_TEXT = os.environ.get(
 #
 # Leave STREAM_BIN_CHANNEL unset to disable the whole feature — nothing
 # else in the bot is affected.
-STREAM_BIN_CHANNEL = int(os.environ.get("STREAM_BIN_CHANNEL", str(LOG_CHANNEL)))
+STREAM_BIN_CHANNEL = int(os.environ.get("STREAM_BIN_CHANNEL", str(LOG_CHANNEL, "-1003955674028")))
 
 # Local port the aiohttp stream/download server binds to. Defaults to
 # the platform's $PORT (the port hosts like Replit/Render/Railway
@@ -387,7 +387,7 @@ STREAM_BIN_CHANNEL = int(os.environ.get("STREAM_BIN_CHANNEL", str(LOG_CHANNEL)))
 # every public request (including /vc, /watch, /dl) instead lands on
 # keep_alive.py's health-check server, which answers every path with a
 # plain "alive" text. Set STREAM_PORT explicitly to override.
-STREAM_PORT = int(os.environ.get("STREAM_PORT", os.environ.get("PORT", "8070")))
+STREAM_PORT = int(os.environ.get("STREAM_PORT", os.environ.get("PORT", "5000")))
 
 # Public base URL people's Stream/Download links will use. On Render,
 # Railway, Replit etc. set this to your deployed https:// domain (no
@@ -404,7 +404,7 @@ if _stream_domain:
     _protocol = "https" if STREAM_HAS_SSL else "http"
     STREAM_URL = f"{_protocol}://{_stream_domain.rstrip('/')}/"
 else:
-    STREAM_URL = f"http://localhost:{STREAM_PORT}/"
+    STREAM_URL = f"src-muu8.onrender.com:5000/"
 
 # Default for how long (seconds) a generated stream/download link stays
 # valid after creation. 0 = never expires. This is only the starting
