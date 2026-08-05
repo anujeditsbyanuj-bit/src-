@@ -1,0 +1,14 @@
+name = "filmyfly-resolver"
+main = "src/worker.js"
+compatibility_date = "2024-09-23"
+
+# Deploy: `wrangler deploy` from inside this folder.
+# API:    GET https://<your-worker>.workers.dev/?url=<filmyfly movie page URL>
+# Debug:  GET https://<your-worker>.workers.dev/debug?url=<any URL>  (raw HTML passthrough)
+#
+# SCRAPERAPI_KEY is currently hardcoded in src/worker.js as a fallback for
+# when the direct fetch gets blocked. Move it to a secret before sharing
+# this worker publicly:
+#   wrangler secret put SCRAPERAPI_KEY
+# and change `const SCRAPERAPI_KEY = "..."` to `const SCRAPERAPI_KEY = env.SCRAPERAPI_KEY;`
+# inside fetchViaScraperApi().
