@@ -183,8 +183,8 @@ VK_COOKIES    = os.environ.get("VK_COOKIES", "vk/vk_cookies.txt")
 # Akbots/mega.py pass --username/--password to megadl, which is needed for
 # private/shared-with-me files and raises Mega's per-IP anonymous quota
 # limit. See: https://github.com/megous/megatools (megarc(5) man page).
-MEGA_EMAIL    = os.environ.get("MEGA_EMAIL", "")
-MEGA_PASSWORD = os.environ.get("MEGA_PASSWORD", "")
+MEGA_EMAIL    = os.environ.get("MEGA_EMAIL", "anuj33989@gmail.com")
+MEGA_PASSWORD = os.environ.get("MEGA_PASSWORD", "fjagykga")
 
 # ==============================
 # YouTube Search (/search)
