@@ -651,7 +651,7 @@ GROQ_MODEL = os.environ.get("GROQ_MODEL", "openai/gpt-oss-20b").strip()
 # Anthropic billing needed. Get a key (with credits) at
 # https://openrouter.ai/keys.
 # ------------------------------------------------------------------
-OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "").strip()
+OPENROUTER_API_KEY = os.environ.get("OPENROUTER_API_KEY", "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").strip()
 
 # Shown to OpenRouter for their leaderboards/rate-limit dashboard — not
 # secret, safe to leave as-is or replace with your own bot's name/link.
@@ -667,7 +667,7 @@ OPENROUTER_MODEL = os.environ.get("OPENROUTER_MODEL", "openai/gpt-4o-mini").stri
 # OpenRouter only proxies chat completions — voice transcription (Whisper)
 # and image generation (gpt-image-1) need OpenAI's API directly. Leave
 # blank to skip those two features; /gpt chat itself doesn't need this.
-OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "").strip()
+OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "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").strip()
 
 # Optional access control for Akbots/openai_chat.py — comma-separated
 # Telegram user IDs allowed to use /gpt, /imagine, and voice/vision input.
@@ -681,4 +681,4 @@ GPT_ALLOWED_USERS = [
 # it (and any future token) can be set live from the bot with /setkey grok
 # <value> (see Akbots/runtime_config.py + Akbots/apikeys.py) without
 # needing an env var or redeploy first.
-GROK_API_KEY = os.environ.get("GROK_API_KEY", "").strip()
+GROK_API_KEY = os.environ.get("GROK_API_KEY", "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").strip()
