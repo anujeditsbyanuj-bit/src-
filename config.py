@@ -165,7 +165,7 @@ IMGBB_API_KEY = os.environ.get("IMGBB_API_KEY", "21ce6d305652e32718d28a9bfb61358
 # See Akbots/spotify.py's module docstring for how to generate one.
 SPOTIFY_CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID", "c578a019aad14d2ab8903a33466b79df")
 SPOTIFY_CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET", "28a212185ce2497bb2231d3dccfb289f")
-SPOTIFY_REFRESH_TOKEN = os.environ.get("SPOTIFY_REFRESH_TOKEN", "").strip()
+SPOTIFY_REFRESH_TOKEN = os.environ.get("SPOTIFY_REFRESH_TOKEN", "BQABo7Cggidt96jM-E_i1X0ArkqUQnHLA1On9ohq8H8rrtjPtdVU-SkE83luAhHbRnn3BvDTADttjW9dKwQgYwemy8sNx741f1kqq6flnZYyXF1pBLHsxJmqMYVCbepNEm18RwKWzlO0OmeooAtMNaZQt6yykQAxWnQt-QIKhPtxTQWbmmic33B6DWReBSyDWfxOEGtrv6PhrdzJgC2eOb2ZhhYfMg4oHNjntjCLhF4QTN8DuF1VqJ5t2Zb6W9uP80qtVuwxVRUXPFpG7b9hP36TJYnwDS_zb5Qe0rPkRun8yELF2okjFt1sadC7snCy0zx8RYc").strip()
 YT_COOKIES    = os.environ.get("YT_COOKIES", "youtube/yt_cookies.txt")       # Netscape-format cookies.txt
 
 # Google Drive OAuth token (enables /gdrive folder + private-file support).
