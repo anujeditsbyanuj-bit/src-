@@ -430,11 +430,11 @@ This repo ships a `Procfile` (`worker: python3 bot.py`) and `runtime.txt` (`pyth
 # 📞 Support
 
 <p align="center">
-  <a href="https://t.me/AkBots_Official">
+  <a href="https://t.me/Anujedits76">
     <img src="https://img.shields.io/badge/AkBots-Official%20Channel-blue?style=for-the-badge&logo=telegram">
   </a>
   <br><br>
-  <a href="https://t.me/THEUPDATEDGUYS">
+  <a href="https://t.me/anujedits76">
     <img src="https://img.shields.io/badge/Updates-Channel-blue?style=for-the-badge&logo=telegram">
   </a>
 </p>
