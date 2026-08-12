@@ -1,0 +1,18 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+requests==2.32.3
+m3u8==3.6.0
+pycryptodome==3.20.0
+python-multipart==0.0.9
+aiofiles==24.1.0
+
+# --- Optional: only needed for DASH/Widevine-protected content ---
+# Not required for HLS-only use. When this service runs in-process with the
+# rest of the bot (the normal setup — see Akbots/hotstar_local_server.py),
+# these are already satisfied by the main project's own requirements.txt,
+# which also needs a system `ffmpeg` binary and the bundled `mp4decrypt`
+# at Akbots/bin/mp4decrypt. Only add these here if deploying this service
+# standalone (its own Dockerfile) AND you also bundle the Akbots package
+# and mp4decrypt binary alongside it.
+# pywidevine
+# yt-dlp

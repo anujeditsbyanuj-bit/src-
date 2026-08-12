@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hotstar Stream API</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0a0a0f; color: #e0e0e0; font-family: 'Segoe UI', sans-serif; min-height: 100vh; }
+
+  .header { background: linear-gradient(135deg, #1a0a2e, #16213e); padding: 20px 32px; border-bottom: 1px solid #2a2a4a; display: flex; align-items: center; gap: 12px; }
+  .header h1 { font-size: 20px; font-weight: 700; color: #fff; }
+  .badge { background: #e50914; color: #fff; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 4px; letter-spacing: 1px; }
+
+  .container { max-width: 900px; margin: 0 auto; padding: 32px 24px; }
+
+  .card { background: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 24px; margin-bottom: 24px; }
+  .card h2 { font-size: 14px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+  .card h2 span { font-size: 16px; }
+
+  label { display: block; font-size: 12px; color: #6b7280; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+  input, textarea { width: 100%; background: #0d1117; border: 1px solid #374151; border-radius: 8px; padding: 10px 14px; color: #e0e0e0; font-size: 13px; font-family: 'Courier New', monospace; margin-bottom: 14px; outline: none; transition: border-color 0.2s; }
+  input:focus, textarea:focus { border-color: #6366f1; }
+  textarea { height: 80px; resize: vertical; }
+
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+  button { background: #6366f1; color: #fff; border: none; border-radius: 8px; padding: 11px 22px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  button:hover { background: #4f46e5; transform: translateY(-1px); }
+  button.secondary { background: #1f2937; border: 1px solid #374151; }
+  button.secondary:hover { background: #374151; }
+  button.danger { background: #7f1d1d; }
+  button.danger:hover { background: #991b1b; }
+
+  .result { background: #0d1117; border: 1px solid #374151; border-radius: 8px; padding: 14px; font-family: 'Courier New', monospace; font-size: 12px; color: #10b981; white-space: pre-wrap; word-break: break-all; margin-top: 14px; max-height: 300px; overflow-y: auto; display: none; }
+  .result.error { color: #ef4444; }
+  .result.visible { display: block; }
+
+  .jobs-list { display: flex; flex-direction: column; gap: 10px; }
+  .job-card { background: #0d1117; border: 1px solid #374151; border-radius: 8px; padding: 14px; display: flex; align-items: center; gap: 14px; }
+  .job-id { font-family: monospace; font-size: 11px; color: #6b7280; min-width: 80px; }
+  .job-url { font-size: 11px; color: #9ca3af; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .job-progress { min-width: 200px; }
+  .progress-bar { background: #1f2937; border-radius: 999px; height: 6px; overflow: hidden; margin-bottom: 4px; }
+  .progress-fill { background: linear-gradient(90deg, #6366f1, #8b5cf6); height: 100%; border-radius: 999px; transition: width 0.5s; }
+  .job-status { font-size: 11px; color: #6b7280; }
+  .status-done { color: #10b981; }
+  .status-error { color: #ef4444; }
+  .status-downloading { color: #f59e0b; }
+
+  .tip { font-size: 11px; color: #4b5563; margin-top: 8px; line-height: 1.6; }
+  .tip code { background: #1f2937; padding: 1px 5px; border-radius: 3px; color: #a78bfa; }
+
+  .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .tab-bar { display: flex; gap: 4px; margin-bottom: 24px; }
+  .tab { padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; color: #6b7280; background: transparent; border: 1px solid transparent; }
+  .tab.active { background: #1f2937; color: #e0e0e0; border-color: #374151; }
+
+  #tab-direct { display: none; }
+  .visible-tab { display: block; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="badge">HS</div>
+  <h1>Hotstar Stream API</h1>
+</div>
+
+<div class="container">
+
+  <div class="tab-bar">
+    <div class="tab active" onclick="switchTab('resolve')">🔍 Resolve Stream</div>
+    <div class="tab" onclick="switchTab('direct')">⬇️ Direct Download</div>
+    <div class="tab" onclick="switchTab('jobs')">📋 Jobs</div>
+  </div>
+
+  <!-- RESOLVE TAB -->
+  <div id="tab-resolve">
+    <div class="card">
+      <h2><span>🔍</span> Resolve Content ID → Stream URL</h2>
+
+      <label>Content ID</label>
+      <input id="content_id" type="text" placeholder="e.g. 1271635183  (grab from Hotstar URL)" />
+
+      <label>User Token (x-hs-usertoken)</label>
+      <textarea id="user_token" placeholder="Paste your JWT token from DevTools → Network → any Hotstar API request → x-hs-usertoken header"></textarea>
+
+      <label>Cookies JSON (optional)</label>
+      <textarea id="cookies_json" placeholder='{"geo":"IN,TN,CHENNAI,...", "userUP": "..."}'></textarea>
+
+      <div class="actions">
+        <button onclick="resolve()">Resolve Stream URL</button>
+        <button class="secondary" onclick="clearResult('resolve-result')">Clear</button>
+      </div>
+
+      <div class="result" id="resolve-result"></div>
+      <p class="tip">📌 How to get Content ID: Open any show/match on Hotstar → the URL shows <code>/in/shows/name/<b>655</b></code> or <code>/in/sports/<b>1271635183</b></code> — that number is the content_id.</p>
+    </div>
+
+    <div class="card">
+      <h2><span>⬇️</span> Download Resolved Stream</h2>
+      <label>M3U8 URL (from resolve above, or grabbed from DevTools)</label>
+      <input id="m3u8_from_resolve" type="text" placeholder="https://hssportsprepack.akamaized.net/...index.m3u8" />
+      <div class="row">
+        <div>
+          <label>Output Name</label>
+          <input id="output_name" type="text" placeholder="match_output" value="hotstar_stream" />
+        </div>
+        <div>
+          <label>Workers (threads)</label>
+          <input id="workers" type="number" value="6" min="1" max="16" />
+        </div>
+      </div>
+      <div class="actions">
+        <button onclick="queueDownload()">Queue Download</button>
+      </div>
+      <div class="result" id="download-result"></div>
+    </div>
+  </div>
+
+  <!-- DIRECT DOWNLOAD TAB -->
+  <div id="tab-direct" style="display:none;">
+    <div class="card">
+      <h2><span>⬇️</span> Direct M3U8 Download</h2>
+      <label>M3U8 URL</label>
+      <input id="direct_m3u8" type="text" placeholder="https://...index.m3u8" />
+      <div class="row">
+        <div>
+          <label>Output Name</label>
+          <input id="direct_output" type="text" placeholder="output" value="stream" />
+        </div>
+        <div>
+          <label>Workers</label>
+          <input id="direct_workers" type="number" value="6" min="1" max="16" />
+        </div>
+      </div>
+      <div class="actions">
+        <button onclick="directDownload()">Start Download</button>
+      </div>
+      <div class="result" id="direct-result"></div>
+    </div>
+  </div>
+
+  <!-- JOBS TAB -->
+  <div id="tab-jobs" style="display:none;">
+    <div class="card">
+      <h2><span>📋</span> Download Jobs</h2>
+      <div class="actions" style="margin-bottom:16px;">
+        <button onclick="loadJobs()">Refresh</button>
+        <button class="secondary" onclick="startAutoRefresh()">Auto Refresh (5s)</button>
+        <button class="danger" onclick="stopAutoRefresh()">Stop Auto</button>
+      </div>
+      <div id="jobs-list" class="jobs-list"><p style="color:#6b7280;font-size:13px;">No jobs yet.</p></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let autoRefreshInterval = null;
+
+function switchTab(tab) {
+  document.querySelectorAll('[id^="tab-"]').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+  document.getElementById('tab-' + tab).style.display = 'block';
+  event.target.classList.add('active');
+  if (tab === 'jobs') loadJobs();
+}
+
+function showResult(id, data, isError=false) {
+  const el = document.getElementById(id);
+  el.className = 'result visible' + (isError ? ' error' : '');
+  el.textContent = typeof data === 'string' ? data : JSON.stringify(data, null, 2);
+}
+
+function clearResult(id) {
+  const el = document.getElementById(id);
+  el.className = 'result';
+  el.textContent = '';
+}
+
+async function resolve() {
+  const content_id = document.getElementById('content_id').value.trim();
+  const user_token = document.getElementById('user_token').value.trim();
+  let cookies = {};
+  try { cookies = JSON.parse(document.getElementById('cookies_json').value || '{}'); } catch(e) {}
+
+  if (!content_id || !user_token) {
+    showResult('resolve-result', 'content_id and user_token are required', true);
+    return;
+  }
+
+  showResult('resolve-result', 'Resolving...');
+  try {
+    const r = await fetch('/api/resolve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content_id, user_token, cookies })
+    });
+    const data = await r.json();
+    showResult('resolve-result', data, !r.ok);
+    if (data.stream_url) {
+      document.getElementById('m3u8_from_resolve').value = data.stream_url;
+    }
+  } catch(e) {
+    showResult('resolve-result', e.message, true);
+  }
+}
+
+async function queueDownload() {
+  const m3u8_url = document.getElementById('m3u8_from_resolve').value.trim();
+  const output_name = document.getElementById('output_name').value.trim() || 'stream';
+  const workers = parseInt(document.getElementById('workers').value) || 6;
+  await _queueDownload(m3u8_url, output_name, workers, 'download-result');
+}
+
+async function directDownload() {
+  const m3u8_url = document.getElementById('direct_m3u8').value.trim();
+  const output_name = document.getElementById('direct_output').value.trim() || 'stream';
+  const workers = parseInt(document.getElementById('direct_workers').value) || 6;
+  await _queueDownload(m3u8_url, output_name, workers, 'direct-result');
+}
+
+async function _queueDownload(m3u8_url, output_name, workers, resultId) {
+  if (!m3u8_url) { showResult(resultId, 'M3U8 URL is required', true); return; }
+  showResult(resultId, 'Queuing download...');
+  try {
+    const r = await fetch('/api/download', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ m3u8_url, output_name, workers })
+    });
+    const data = await r.json();
+    showResult(resultId, data, !r.ok);
+    if (data.job_id) {
+      showResult(resultId, `Job queued! ID: ${data.job_id}\nCheck the Jobs tab to monitor progress and download.`);
+    }
+  } catch(e) {
+    showResult(resultId, e.message, true);
+  }
+}
+
+async function loadJobs() {
+  try {
+    const r = await fetch('/api/jobs');
+    const jobs = await r.json();
+    const container = document.getElementById('jobs-list');
+    if (!jobs.length) {
+      container.innerHTML = '<p style="color:#6b7280;font-size:13px;">No jobs yet.</p>';
+      return;
+    }
+    container.innerHTML = jobs.map(j => {
+      const statusClass = j.status === 'done' ? 'status-done' : j.status === 'error' ? 'status-error' : 'status-downloading';
+      const pct = j.progress || 0;
+      const duration = j.duration_seconds ? ` · ${(j.duration_seconds/60).toFixed(1)}min` : '';
+      return `
+        <div class="job-card">
+          <div class="job-id">#${j.job_id}</div>
+          <div class="job-url" title="${j.m3u8_url}">${j.m3u8_url}</div>
+          <div class="job-progress">
+            <div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+            <div class="job-status ${statusClass}">${j.status} · ${j.downloaded||0}/${j.total||0} segs · ${pct}%${duration}</div>
+          </div>
+          <div class="actions">
+            ${j.status === 'done' ? `<a href="/api/file/${j.job_id}" download><button>⬇ Download</button></a>` : ''}
+            <button class="danger" onclick="deleteJob('${j.job_id}')">✕</button>
+          </div>
+        </div>`;
+    }).join('');
+  } catch(e) {
+    console.error(e);
+  }
+}
+
+async function deleteJob(job_id) {
+  await fetch(`/api/jobs/${job_id}`, { method: 'DELETE' });
+  loadJobs();
+}
+
+function startAutoRefresh() {
+  if (autoRefreshInterval) return;
+  autoRefreshInterval = setInterval(loadJobs, 5000);
+  loadJobs();
+}
+
+function stopAutoRefresh() {
+  clearInterval(autoRefreshInterval);
+  autoRefreshInterval = null;
+}
+</script>
+</body>
+</html>
