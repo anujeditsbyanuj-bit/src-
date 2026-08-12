@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cypher Anime - Premium Streaming</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Reproduce y transmite tu anime favorito en tiempo real en Cypher Anime, con calidad premium sin anuncios.">
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <!-- HLS.js CDN for playing .m3u8 files in all browsers -->
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@1.4.12/dist/hls.min.js"></script>
+</head>
+<body>
+  
+  <!-- Estructura del Portal -->
+  <div class="app-container">
+    
+    <!-- Barra de Navegación Lateral -->
+    <header class="sidebar">
+      <div class="logo-area">
+        <i class="fa-solid fa-terminal logo-icon"></i>
+        <h1>Cypher<span>Anime</span></h1>
+      </div>
+      <nav class="nav-links">
+        <a href="#" class="nav-item active" id="nav-home"><i class="fa-solid fa-house"></i> Inicio</a>
+        <a href="#" class="nav-item" id="nav-popular"><i class="fa-solid fa-fire"></i> Tendencias</a>
+      </nav>
+      <div class="sidebar-footer">
+        <p>&copy; 2026 Cypher Anime</p>
+      </div>
+    </header>
+
+    <!-- Área de Contenido Principal -->
+    <main class="main-content">
+      
+      <!-- Barra Superior de Búsqueda -->
+      <section class="top-bar">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="search-input" placeholder="Buscar anime en todos los proveedores..." autocomplete="off">
+          <button id="search-btn"><i class="fa-solid fa-arrow-right"></i></button>
+        </div>
+      </section>
+
+      <!-- Contenedores Dinámicos de Pantallas -->
+      <div class="content-wrapper">
+        
+        <!-- PANTALLA 1: INICIO / RESULTADOS DE BÚSQUEDA -->
+        <section id="search-view" class="view-panel active">
+          <div class="section-title">
+            <h2 id="view-title">Catálogo</h2>
+            <p id="view-subtitle">Explora el catálogo completo de anime</p>
+          </div>
+
+          <!-- Filtros de Género -->
+          <div class="genre-filters" id="genre-filters">
+            <button class="genre-chip active" data-genre="">Todos</button>
+            <button class="genre-chip" data-genre="accion">Acción</button>
+            <button class="genre-chip" data-genre="aventura">Aventura</button>
+            <button class="genre-chip" data-genre="comedia">Comedia</button>
+            <button class="genre-chip" data-genre="drama">Drama</button>
+            <button class="genre-chip" data-genre="fantasia">Fantasía</button>
+            <button class="genre-chip" data-genre="romance">Romance</button>
+            <button class="genre-chip" data-genre="sci-fi">Sci-Fi</button>
+            <button class="genre-chip" data-genre="sobrenatural">Sobrenatural</button>
+            <button class="genre-chip" data-genre="shounen">Shounen</button>
+            <button class="genre-chip" data-genre="seinen">Seinen</button>
+            <button class="genre-chip" data-genre="mecha">Mecha</button>
+            <button class="genre-chip" data-genre="terror">Terror</button>
+            <button class="genre-chip" data-genre="misterio">Misterio</button>
+            <button class="genre-chip" data-genre="recuentos-de-la-vida">Recuentos</button>
+            <button class="genre-chip" data-genre="ecchi">Ecchi</button>
+          </div>
+          
+          <!-- Cuadrícula de Resultados -->
+          <div id="results-grid" class="cards-grid">
+            <!-- Los Skeletons de carga o tarjetas se renderizarán aquí -->
+          </div>
+
+          <!-- Sentinel de Scroll Infinito -->
+          <div id="scroll-sentinel" class="scroll-sentinel">
+            <div class="scroll-spinner"></div>
+            <p>Cargando más anime...</p>
+          </div>
+        </section>
+
+        <!-- PANTALLA 2: DETALLE DEL ANIME Y EPISODIOS -->
+        <section id="detail-view" class="view-panel">
+          <button class="back-btn" id="btn-back-to-search"><i class="fa-solid fa-chevron-left"></i> Volver</button>
+          
+          <div class="anime-hero" id="anime-hero-banner">
+            <div class="hero-overlay"></div>
+            <div class="hero-content">
+              <div class="hero-poster" id="anime-poster"></div>
+              <div class="hero-info">
+                <span class="anime-badge" id="anime-type">Serie</span>
+                <h2 id="anime-title">Nombre del Anime</h2>
+                <div class="anime-genres" id="anime-genres"></div>
+                <p class="anime-synopsis" id="anime-description">Sinopsis del anime...</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="episodes-container">
+            <h3><i class="fa-solid fa-list-ol"></i> Lista de Episodios</h3>
+            <div class="episodes-grid" id="episodes-grid">
+              <!-- Cuadrícula de episodios inyectada por JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- PANTALLA 3: REPRODUCTOR DE VIDEO -->
+        <section id="player-view" class="view-panel">
+          <button class="back-btn" id="btn-back-to-detail"><i class="fa-solid fa-chevron-left"></i> Volver al anime</button>
+          
+          <div class="player-wrapper">
+            <div class="player-header">
+              <h2 id="playing-title">Reproduciendo</h2>
+              <p id="playing-subtitle">Cargando...</p>
+            </div>
+            
+            <div class="video-container" id="video-container">
+              <video id="main-player" controls crossorigin="anonymous"></video>
+              <div class="video-loader" id="video-loader">
+                <div class="spinner"></div>
+                <p>Preparando la resolución directa del servidor...</p>
+              </div>
+            </div>
+
+            <!-- Botones de Control del Reproductor -->
+            <div class="player-controls-row">
+              <button id="player-prev-btn" class="player-control-btn"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+              <button id="player-catalog-btn" class="player-control-btn"><i class="fa-solid fa-grip"></i> Catálogo</button>
+              <a id="player-external-btn" target="_blank" class="player-control-btn" style="display:none; text-decoration:none;"><i class="fa-solid fa-up-right-from-square"></i> Externo</a>
+              <button id="player-next-btn" class="player-control-btn">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            
+            <div class="server-selection-panel">
+              <h4><i class="fa-solid fa-satellite-dish"></i> Servidores Disponibles</h4>
+              <div class="servers-list" id="servers-list"></div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
