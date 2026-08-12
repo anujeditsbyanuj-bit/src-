@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ott-Bot Stream Capturer</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            width: 400px;
+            padding: 20px;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #e0e0e0;
+            min-height: 300px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header h3 {
+            font-size: 18px;
+            background: linear-gradient(90deg, #00d4ff, #7b2cbf);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .status {
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .status.waiting {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            color: #ffc107;
+        }
+
+        .status.ready {
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.3);
+            color: #4caf50;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: #00d4ff;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .data-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 11px;
+            word-break: break-all;
+            max-height: 100px;
+            overflow-y: auto;
+            margin: 8px 0;
+            font-family: 'Consolas', monospace;
+            color: #a0a0a0;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 13px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 8px;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        button.copy-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
+
+        button.download-btn {
+            background: linear-gradient(135deg, #fc4a1a 0%, #f7b733 100%);
+            font-size: 14px;
+            padding: 12px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 12px;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #888;
+        }
+
+        .value {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .instructions {
+            font-size: 11px;
+            line-height: 1.6;
+            color: #888;
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+        }
+
+        .instructions ol {
+            padding-left: 18px;
+        }
+
+        .instructions li {
+            margin-bottom: 4px;
+        }
+
+        #videoSection { display: none; }
+        #mpdSection { display: none; }
+        #licenseSection { display: none; }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .badge.success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+        }
+
+        .badge.pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h3>🎬 Ott-Bot Stream Capturer</h3>
+    </div>
+
+    <div id="status" class="status waiting">
+        ⏳ Waiting for video playback...
+    </div>
+
+    <!-- Video Info Section -->
+    <div id="videoSection" class="section">
+        <div class="section-title">📹 Video Information</div>
+        <div class="info-row">
+            <span class="label">Title:</span>
+            <span class="value" id="videoTitle">-</span>
+        </div>
+        <div class="info-row">
+            <span class="label">Status:</span>
+            <span class="value"><span class="badge success">Playing</span></span>
+        </div>
+    </div>
+
+    <!-- MPD URL Section -->
+    <div id="mpdSection" class="section">
+        <div class="section-title">🎯 MPD URL <span class="badge success">Captured</span></div>
+        <div class="data-box" id="mpdUrl"></div>
+        <button class="copy-btn" onclick="copyToClipboard('mpdUrl')">📋 Copy MPD URL</button>
+    </div>
+
+    <!-- License URL Section -->
+    <div id="licenseSection" class="section">
+        <div class="section-title">🔑 License URL <span class="badge success">Captured</span></div>
+        <div class="data-box" id="licenseUrl"></div>
+        <button class="copy-btn" onclick="copyToClipboard('licenseUrl')">📋 Copy License URL</button>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="section">
+        <div class="section-title">⚡ Quick Actions</div>
+        <button class="download-btn" onclick="startDownload()">🚀 Download This Video</button>
+    </div>
+
+    <!-- Instructions -->
+    <div class="instructions">
+        <strong>📖 How to use:</strong>
+        <ol>
+            <li>Run Python backend: <code>python bot/main.py</code></li>
+            <li>Open Hotstar and play video</li>
+            <li>MPD & License URLs captured automatically</li>
+            <li>Click "Download This Video" or send URL via Telegram bot</li>
+        </ol>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

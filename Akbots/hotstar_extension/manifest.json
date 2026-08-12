@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "Ott-Bot Stream Capturer",
+  "version": "2.0",
+  "description": "Auto-captures MPD URLs, License URLs, and sends to Python backend for Hotstar/OTT downloads",
+  "permissions": [
+    "webRequest",
+    "storage",
+    "clipboardWrite",
+    "tabs",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*.hotstar.com/*",
+    "*://*.disneystar.com/*",
+    "*://*.jiocinema.com/*",
+    "*://*.amazonprimevideo.com/*",
+    "*://*.netflix.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Ott-Bot Stream Capturer"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.hotstar.com/*",
+        "*://*.disneystar.com/*",
+        "*://*.jiocinema.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}
