@@ -948,8 +948,8 @@ config = _LowercaseConfigAlias()
 # crunchyroll.py (Akbots/crunchyroll_dl/) and the plugin itself both do
 # `from config import *`, so these are kept as bare names to match what
 # that code already expects.
-CR_EMAIL = os.environ.get("CR_EMAIL", "").strip()
-CR_PASSWORD = os.environ.get("CR_PASSWORD", "").strip()
+CR_EMAIL = os.environ.get("CR_EMAIL", "erickboikopacker@gmail.com").strip()
+CR_PASSWORD = os.environ.get("CR_PASSWORD", "Esj091108").strip()
 Email = CR_EMAIL
 Password = CR_PASSWORD
 use_proxy = os.environ.get("CR_USE_PROXY", "False").strip().lower() == "true"
