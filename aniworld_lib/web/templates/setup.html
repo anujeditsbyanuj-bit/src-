@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="{{ ui_language }}">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Setup - AniWorld Downloader</title>
+  {% set meta_title = 'Setup' %}
+  {% include "head_meta.html" %}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v={{ app_version }}" />
+</head>
+
+<body class="auth-body">
+  <div class="auth-card">
+    <h1>Create admin account</h1>
+    <p class="auth-hint">This is the first start, pick the account you want to administer the Web UI with.</p>
+    {% if error %}<div class="auth-error">{{ error }}</div>{% endif %}
+
+    <form method="post" class="auth-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      <input type="text" name="username" placeholder="Username" autocomplete="username" autofocus required />
+      <input type="password" name="password" placeholder="Password (min. 8 characters)"
+        autocomplete="new-password" required />
+      <input type="password" name="confirm" placeholder="Repeat password" autocomplete="new-password" required />
+      <button type="submit" class="btn btn-primary btn-block">Create account</button>
+    </form>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="{{ ui_language }}">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in - AniWorld Downloader</title>
+  {% set meta_title = 'Sign in' %}
+  {% include "head_meta.html" %}
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v={{ app_version }}" />
+</head>
+
+<body class="auth-body">
+  <div class="auth-card">
+    <h1>AniWorld Downloader</h1>
+    {% if error %}<div class="auth-error">{{ error }}</div>{% endif %}
+
+    {% if not force_sso %}
+    <form method="post" class="auth-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      <input type="text" name="username" placeholder="Username" autocomplete="username" autofocus required />
+      <input type="password" name="password" placeholder="Password" autocomplete="current-password" required />
+      <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+    </form>
+    {% endif %}
+
+    {% if oidc_enabled %}
+    {% if not force_sso %}<div class="auth-divider">or</div>{% endif %}
+    <a href="{{ url_for('auth.oidc_login') }}" class="btn btn-secondary btn-block">
+      Continue with {{ oidc_display_name }}
+    </a>
+    {% endif %}
+  </div>
+</body>
+
+</html>
