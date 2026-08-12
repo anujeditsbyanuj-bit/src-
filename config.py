@@ -185,7 +185,7 @@ YT_COOKIES    = os.environ.get("YT_COOKIES", "youtube/yt_cookies.txt")       # N
 # neither is set, get_m3u8_url() still works for any content the site
 # serves to guests (its existing guest-fetch fallback), just not anything
 # that needs a logged-in session.
-GOON_BASE_URL = os.environ.get("GOON_BASE_URL", "").strip().rstrip("/")
+GOON_BASE_URL = os.environ.get("GOON_BASE_URL", "https://faphouse2.com/").strip().rstrip("/")
 GOON_EMAIL    = os.environ.get("GOON_EMAIL", "rockstarga69@gmail.com")
 GOON_PASSWORD = os.environ.get("GOON_PASSWORD", "Jaiisbeast@1")
 GOON_COOKIES  = os.environ.get("GOON_COOKIES", "")   # raw string or Netscape cookies.txt content
