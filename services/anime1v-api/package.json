@@ -1,0 +1,42 @@
+{
+  "name": "anime1v-api",
+  "version": "1.0.0",
+  "description": "Backend reconstruido para Anime1v API",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "check": "node --check src/server.js"
+  },
+  "keywords": [
+    "anime",
+    "api",
+    "scraper",
+    "animeav1"
+  ],
+  "author": "FxxMorgan",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.9.0",
+    "cheerio": "^1.0.0",
+    "cli-progress": "^3.12.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "ffmpeg-static": "^5.3.0",
+    "fluent-ffmpeg": "^2.1.3",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "prompts": "^2.4.2",
+    "puppeteer": "^24.42.0",
+    "unpacker": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "allowScripts": {
+    "ffmpeg-static@5.3.0": true,
+    "puppeteer@24.43.1": true
+  }
+}

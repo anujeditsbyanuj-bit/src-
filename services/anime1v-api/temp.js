@@ -1,0 +1,1 @@
+const axios = require('axios'); axios.get('https://animeav1.com/?s=slime').then(res => { const cheerio = require('cheerio'); const $ = cheerio.load(res.data); \.TPostMv .Title.each((i, el) => console.log(\.text())); })
