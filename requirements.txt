@@ -341,7 +341,7 @@ groq
 # explicitly here to a range every one of those actually supports, so pip
 # doesn't have to search hundreds of google-genai releases to find one
 # that fits.
-pydantic>=2.0.0,<3.0.0
+pydantic
 
 # Akbots/nova_bypasser/ (ported from the Nova link-bypasser bots) needs a
 # pure-Python JS interpreter for its "execute inline JS redirect" method.
