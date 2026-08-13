@@ -150,7 +150,7 @@ mutagen
 # pydantic>=2.0.0 requirement. Keep httpx declared ONCE, here, for the
 # whole project. Range matches what google-genai itself requires
 # (httpx>=0.28.1,<1.0.0) so pip doesn't have to backtrack.
-httpx>=0.28.1,<1.0.0
+httpx
 
 # h2: HTTP/2 support for httpx.AsyncClient(http2=True) — used by
 # terabridge_account.py's per-account sessions and terabox.py's shared
