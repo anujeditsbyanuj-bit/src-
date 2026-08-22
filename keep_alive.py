@@ -61,23 +61,32 @@ def _ping_loop():
 keep_alive = None  # alias set below
 
 
-def lastperson07_keep_alive():
+def lastperson07_keep_alive(real_server_started: bool = False):
+    """real_server_started=True means something else (Akbots/filetolink's
+    server) already bound $PORT — on single-port hosts (Render/Railway/
+    Replit) that's the same _PORT this would try to bind too, which would
+    just fail with "Address already in use". So in that case, skip binding
+    our own HTTP server entirely and only start the self-ping thread —
+    that's the part that actually matters for beating Render's free-tier
+    inactivity spin-down (see keep_alive.py module docstring / bot.py's
+    caller comment), and it doesn't need a port of its own."""
     global _SERVER, _PING_THREAD
 
     with _LOCK:
-        if _SERVER is None:
+        if not real_server_started and _SERVER is None:
             try:
                 _SERVER = HTTPServer(("0.0.0.0", _PORT), _HealthHandler)
             except OSError as exc:
                 log.warning("Health server unavailable on :%s: %s", _PORT, exc)
-                return False
-
-            thread = threading.Thread(
-                target=_SERVER.serve_forever,
-                daemon=True,
-                name="lastperson07-health",
-            )
-            thread.start()
+                # Fall through — still start the self-ping thread below even
+                # though the health-check HTTP server itself didn't bind.
+            else:
+                thread = threading.Thread(
+                    target=_SERVER.serve_forever,
+                    daemon=True,
+                    name="lastperson07-health",
+                )
+                thread.start()
 
         if _PING_THREAD is None or not _PING_THREAD.is_alive():
             _PING_THREAD = threading.Thread(
@@ -87,7 +96,10 @@ def lastperson07_keep_alive():
             )
             _PING_THREAD.start()
 
-    log.info("Health server on :%s", _PORT)
+    if real_server_started:
+        log.info("Keep-alive: reusing the already-bound port, self-ping thread started.")
+    else:
+        log.info("Health server on :%s", _PORT)
     return True
 
 
