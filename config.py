@@ -27,9 +27,9 @@ def _require(name: str, default: str = "") -> str:
 # Telegram Bot Credentials
 # ==============================
 
-BOT_TOKEN = _require("BOT_TOKEN", "8638965974:AAGY3oQ4e8rNqzmNvHJsqJglpu_3xfRZNSE")
-API_ID = int(_require("API_ID", "37476811"))
-API_HASH = _require("API_HASH", "7aa60670b871050820086c6267371ee6")
+BOT_TOKEN = _require("BOT_TOKEN", "8660673890:AAHCIJMnlH_mIpRqMXi6uIW5rpj7iRX_uvA")
+API_ID = int(_require("API_ID", "33029767"))
+API_HASH = _require("API_HASH", "5d897bed11bc8b062a12f6c1c3c5360a")
 
 
 # ==============================
@@ -41,7 +41,7 @@ API_HASH = _require("API_HASH", "7aa60670b871050820086c6267371ee6")
 # gated on ADMINS, so silently defaulting to a baked-in ID would give that
 # ID admin access (including those dangerous commands) on any deployment
 # that forgets to set ADMINS explicitly. Failing loudly is safer.
-ADMINS = [int(admin) for admin in _require("ADMINS", "8730393744").split(",") if admin]
+ADMINS = [int(admin) for admin in _require("ADMINS", "8931907813").split(",") if admin]
 
 
 # ==============================
