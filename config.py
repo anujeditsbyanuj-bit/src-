@@ -96,7 +96,7 @@ DB_NAME = os.environ.get("DB_NAME", "SaveRestricted2")
 # ==============================
 
 # Telegram channel ID the bot logs to (example: -1001234567890)
-LOG_CHANNEL = int(_require("LOG_CHANNEL", "-1003824246703"))
+LOG_CHANNEL = int(_require("LOG_CHANNEL", "-1003925649805"))
 
 # --- JDownloader (/jd) — covers hundreds of hosts yt-dlp doesn't. ---
 # Free account at https://my.jdownloader.org — see JDOWNLOADER_SETUP.md.
