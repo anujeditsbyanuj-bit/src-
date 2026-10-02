@@ -41,7 +41,7 @@ API_HASH = _require("API_HASH", "4fdcfab1c7f5e24ae69f3ce6bb234dec")
 # gated on ADMINS, so silently defaulting to a baked-in ID would give that
 # ID admin access (including those dangerous commands) on any deployment
 # that forgets to set ADMINS explicitly. Failing loudly is safer.
-ADMINS = [int(admin) for admin in _require("ADMINS", "8729304171").split(",") if admin]
+ADMINS = [int(admin) for admin in _require("ADMINS", "8608933698").split(",") if admin]
 
 
 # ==============================
